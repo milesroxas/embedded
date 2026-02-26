@@ -24,6 +24,10 @@ export async function getLayerData(path?: string): Promise<LayerData[]> {
   return invoke<LayerData[]>("get_layer_data", { path: path ?? null });
 }
 
+export async function openOverlayWindow(): Promise<void> {
+  return invoke<void>("open_overlay_window");
+}
+
 export function onKeyEvent(
   callback: (event: KeyEvent) => void
 ): Promise<UnlistenFn> {

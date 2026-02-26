@@ -17,6 +17,7 @@ pub fn run() {
             commands::device::disconnect_device,
             commands::device::set_test_mode,
             commands::layers::get_layer_data,
+            commands::overlay::open_overlay_window,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

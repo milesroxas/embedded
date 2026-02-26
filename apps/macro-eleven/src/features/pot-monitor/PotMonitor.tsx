@@ -12,7 +12,7 @@ export function PotMonitor() {
 
   return (
     <div className="pot-monitor">
-      <p style={{ color: "var(--text-secondary)", fontSize: 14 }}>
+      <p style={{ color: "var(--muted-foreground)", fontSize: 14 }}>
         Current layer: {layer}
       </p>
       <PotGauge value={value} />

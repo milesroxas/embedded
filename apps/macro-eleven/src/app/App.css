@@ -1,33 +1,138 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/inter";
+
+@custom-variant dark (&:is(.dark *));
+
 :root {
-  --bg-primary: #1a1a2e;
-  --bg-secondary: #16213e;
-  --bg-surface: #0f3460;
-  --accent: #4cc9f0;
-  --accent-hover: #3ab8df;
-  --key-idle: #233554;
-  --key-pressed: #4ade80;
-  --key-border: #3a5a7c;
-  --text-primary: #e0e0e0;
-  --text-secondary: #a0a0b0;
-  --text-muted: #606070;
-  --danger: #f87171;
-  --success: #4ade80;
-  --warning: #fbbf24;
-  --radius: 8px;
-  --radius-sm: 4px;
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.60 0.13 163);
+    --primary-foreground: oklch(0.98 0.02 166);
+    --secondary: oklch(0.967 0.001 286.375);
+    --secondary-foreground: oklch(0.21 0.006 285.885);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.58 0.22 27);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.85 0.13 165);
+    --chart-2: oklch(0.77 0.15 163);
+    --chart-3: oklch(0.70 0.15 162);
+    --chart-4: oklch(0.60 0.13 163);
+    --chart-5: oklch(0.51 0.10 166);
+    --radius: 0.45rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.60 0.13 163);
+    --sidebar-primary-foreground: oklch(0.98 0.02 166);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.70 0.15 162);
+    --primary-foreground: oklch(0.26 0.05 173);
+    --secondary: oklch(0.274 0.006 286.033);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.371 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.85 0.13 165);
+    --chart-2: oklch(0.77 0.15 163);
+    --chart-3: oklch(0.70 0.15 162);
+    --chart-4: oklch(0.60 0.13 163);
+    --chart-5: oklch(0.51 0.10 166);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.77 0.15 163);
+    --sidebar-primary-foreground: oklch(0.26 0.05 173);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+}
+
+@theme inline {
+    --font-sans: 'Inter Variable', sans-serif;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+    --radius-2xl: calc(var(--radius) + 8px);
+    --radius-3xl: calc(var(--radius) + 12px);
+    --radius-4xl: calc(var(--radius) + 16px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply font-sans bg-background text-foreground;
+    overflow: hidden;
+  }
+  html {
+    @apply font-sans;
+  }
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  overflow: hidden;
 }
 
 #root {
@@ -40,19 +145,19 @@ body {
 .navbar {
   width: 180px;
   min-width: 180px;
-  background: var(--bg-secondary);
+  background: var(--secondary);
   display: flex;
   flex-direction: column;
   padding: 20px 0;
-  border-right: 1px solid var(--bg-surface);
+  border-right: 1px solid var(--muted);
 }
 
 .navbar-brand {
   font-size: 16px;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--primary);
   padding: 0 16px 20px;
-  border-bottom: 1px solid var(--bg-surface);
+  border-bottom: 1px solid var(--muted);
   margin-bottom: 12px;
 }
 
@@ -66,21 +171,21 @@ body {
 .nav-link {
   display: block;
   padding: 10px 16px;
-  color: var(--text-secondary);
+  color: var(--muted-foreground);
   text-decoration: none;
   font-size: 14px;
   transition: background 0.15s, color 0.15s;
 }
 
 .nav-link:hover {
-  background: var(--bg-surface);
-  color: var(--text-primary);
+  background: var(--muted);
+  color: var(--foreground);
 }
 
 .nav-link.active {
-  background: var(--bg-surface);
-  color: var(--accent);
-  border-left: 3px solid var(--accent);
+  background: var(--muted);
+  color: var(--primary);
+  border-left: 3px solid var(--primary);
   padding-left: 13px;
 }
 
@@ -97,8 +202,8 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 12px 24px;
-  border-bottom: 1px solid var(--bg-surface);
-  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--muted);
+  background: var(--secondary);
 }
 
 .app-header h1 {
@@ -133,32 +238,32 @@ body {
 }
 
 .status-connected .status-dot {
-  background: var(--success);
-  box-shadow: 0 0 6px var(--success);
+  background: var(--primary);
+  box-shadow: 0 0 6px var(--primary);
 }
 
 .status-connected {
-  color: var(--success);
-  background: rgba(74, 222, 128, 0.1);
+  color: var(--primary);
+  background: oklch(0.70 0.15 162 / 0.15);
 }
 
 .status-disconnected .status-dot {
-  background: var(--text-muted);
+  background: var(--muted-foreground);
 }
 
 .status-disconnected {
-  color: var(--text-muted);
-  background: rgba(96, 96, 112, 0.1);
+  color: var(--muted-foreground);
+  background: oklch(0.708 0 0 / 0.15);
 }
 
 .status-connecting .status-dot {
-  background: var(--warning);
+  background: var(--destructive);
   animation: pulse 1s infinite;
 }
 
 .status-connecting {
-  color: var(--warning);
-  background: rgba(251, 191, 36, 0.1);
+  color: var(--destructive);
+  background: oklch(0.58 0.22 27 / 0.15);
 }
 
 @keyframes pulse {
@@ -201,24 +306,24 @@ body {
   padding: 4px;
   word-break: break-word;
   transition: background 0.1s, border-color 0.1s, box-shadow 0.1s;
-  border: 2px solid var(--key-border);
-  background: var(--key-idle);
-  color: var(--text-primary);
+  border: 2px solid var(--border);
+  background: var(--muted);
+  color: var(--foreground);
   cursor: default;
   user-select: none;
 }
 
 .key-cell.pressed {
-  background: var(--key-pressed);
-  border-color: var(--key-pressed);
-  color: var(--bg-primary);
-  box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 0 12px oklch(0.70 0.15 162 / 0.4);
 }
 
 .key-cell.layer-view {
   font-size: 11px;
-  background: var(--bg-surface);
-  border-color: var(--key-border);
+  background: var(--muted);
+  border-color: var(--border);
 }
 
 /* Layer selector */
@@ -232,23 +337,23 @@ body {
 .layer-tab {
   padding: 6px 14px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--key-border);
-  background: var(--bg-secondary);
-  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  background: var(--secondary);
+  color: var(--muted-foreground);
   font-size: 12px;
   cursor: pointer;
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 
 .layer-tab:hover {
-  background: var(--bg-surface);
-  color: var(--text-primary);
+  background: var(--muted);
+  color: var(--foreground);
 }
 
 .layer-tab.active {
-  background: var(--accent);
-  color: var(--bg-primary);
-  border-color: var(--accent);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
 }
 
 /* Pot monitor */
@@ -267,15 +372,15 @@ body {
 .pot-gauge-bar {
   width: 100%;
   height: 24px;
-  background: var(--bg-surface);
+  background: var(--muted);
   border-radius: var(--radius);
   overflow: hidden;
-  border: 1px solid var(--key-border);
+  border: 1px solid var(--border);
 }
 
 .pot-gauge-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--key-pressed));
+  background: linear-gradient(90deg, var(--primary), var(--primary));
   border-radius: var(--radius);
   transition: width 0.05s;
 }
@@ -283,34 +388,34 @@ body {
 .pot-value {
   font-size: 36px;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--primary);
   font-variant-numeric: tabular-nums;
 }
 
 .pot-label {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--muted-foreground);
 }
 
 /* Connect button */
 .connect-btn {
   padding: 6px 16px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--accent);
+  border: 1px solid var(--primary);
   background: transparent;
-  color: var(--accent);
+  color: var(--primary);
   font-size: 12px;
   cursor: pointer;
   transition: background 0.15s;
 }
 
 .connect-btn:hover {
-  background: rgba(76, 201, 240, 0.1);
+  background: oklch(0.60 0.13 163 / 0.15);
 }
 
 .connect-btn.connected {
-  border-color: var(--text-muted);
-  color: var(--text-muted);
+  border-color: var(--muted-foreground);
+  color: var(--muted-foreground);
 }
 
 /* Test Mode Toggle */
@@ -318,22 +423,22 @@ body {
   position: relative;
   width: 44px;
   height: 24px;
-  background: var(--bg-surface);
+  background: var(--muted);
   border-radius: 12px;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .test-mode-toggle:hover {
-  background: var(--key-border);
+  background: var(--border);
 }
 
 .test-mode-toggle.active {
-  background: var(--accent);
+  background: var(--primary);
 }
 
 .test-mode-toggle.active:hover {
-  background: var(--accent-hover);
+  background: var(--primary);
 }
 
 .test-mode-toggle-slider {
@@ -349,4 +454,56 @@ body {
 
 .test-mode-toggle.active .test-mode-toggle-slider {
   transform: translateX(20px);
+}
+
+/* Overlay button */
+.overlay-btn {
+  padding: 6px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.overlay-btn:hover {
+  background: oklch(0.60 0.13 163 / 0.15);
+}
+
+/* Overlay — ensure padding is applied (override any resets) */
+.overlay-shell header {
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
+
+.overlay-shell-content {
+  padding: 24px !important;
+}
+
+/* Overlay grid layout — shared via MacropadGrid */
+.overlay-grid-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.overlay-grid-wrapper .macropad-cell {
+  width: 40px;
+  height: 38px;
+}
+
+.overlay-grid-wrapper .macropad-grid {
+  gap: 4px;
+}
+
+.overlay-grid-wrapper .macropad-row {
+  gap: 4px;
 }

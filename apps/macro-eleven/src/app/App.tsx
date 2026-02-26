@@ -5,6 +5,8 @@ import { StatusBadge } from "../shared/ui/StatusBadge";
 import { KeyTesterPage } from "../pages/KeyTesterPage";
 import { LayerViewerPage } from "../pages/LayerViewerPage";
 import { PotMonitorPage } from "../pages/PotMonitorPage";
+import { OverlayView } from "../features/overlay/OverlayView";
+import { openOverlayWindow } from "../shared/lib/tauri";
 import "./App.css";
 
 function AppHeader() {
@@ -16,6 +18,13 @@ function AppHeader() {
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <StatusBadge status={status} />
         <button
+          className="overlay-btn"
+          onClick={() => openOverlayWindow()}
+          title="Open compact overlay"
+        >
+          Overlay
+        </button>
+        <button
           className={`connect-btn ${status === "connected" ? "connected" : ""}`}
           onClick={status === "connected" ? disconnect : connect}
         >
@@ -26,7 +35,7 @@ function AppHeader() {
   );
 }
 
-function App() {
+function MainApp() {
   return (
     <BrowserRouter>
       <DeviceProvider>
@@ -44,6 +53,13 @@ function App() {
       </DeviceProvider>
     </BrowserRouter>
   );
+}
+
+function App() {
+  if (window.location.hash === "#/overlay") {
+    return <OverlayView />;
+  }
+  return <MainApp />;
 }
 
 export default App;

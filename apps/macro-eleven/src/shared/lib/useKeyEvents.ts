@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { KeyEvent } from "../../entities/key";
-import { onKeyEvent } from "../../shared/lib/tauri";
+import { onKeyEvent } from "./tauri";
 
 export function useKeyEvents() {
   const [keyState, setKeyState] = useState<KeyEvent>({

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MacropadGrid } from "../../shared/ui/MacropadGrid";
 import { KeyCell } from "./KeyCell";
-import { useKeyEvents } from "./useKeyEvents";
+import { useKeyEvents } from "../../shared/lib/useKeyEvents";
 import { setTestMode } from "../../shared/lib/tauri";
 
 export function KeyTester() {
@@ -22,11 +22,11 @@ export function KeyTester() {
   return (
     <div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-        <p style={{ color: "var(--text-secondary)", fontSize: 14, margin: 0 }}>
+        <p style={{ color: "var(--muted-foreground)", fontSize: 14, margin: 0 }}>
           Current layer: {layer} — Press keys on the macropad to see them light up.
         </p>
         <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
-          <span style={{ fontSize: 14, color: "var(--text-secondary)" }}>Test Mode</span>
+          <span style={{ fontSize: 14, color: "var(--muted-foreground)" }}>Test Mode</span>
           <div
             className={`test-mode-toggle ${testMode ? "active" : ""}`}
             onClick={handleToggleTestMode}
@@ -34,7 +34,7 @@ export function KeyTester() {
             <div className="test-mode-toggle-slider" />
           </div>
           {testMode && (
-            <span style={{ fontSize: 12, color: "var(--accent)", fontWeight: 500 }}>
+            <span style={{ fontSize: 12, color: "var(--primary)", fontWeight: 500 }}>
               (Keys disabled)
             </span>
           )}
