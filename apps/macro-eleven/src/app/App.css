@@ -1,0 +1,352 @@
+:root {
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --bg-surface: #0f3460;
+  --accent: #4cc9f0;
+  --accent-hover: #3ab8df;
+  --key-idle: #233554;
+  --key-pressed: #4ade80;
+  --key-border: #3a5a7c;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0b0;
+  --text-muted: #606070;
+  --danger: #f87171;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --radius: 8px;
+  --radius-sm: 4px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+#root {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Navbar */
+.navbar {
+  width: 180px;
+  min-width: 180px;
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  border-right: 1px solid var(--bg-surface);
+}
+
+.navbar-brand {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  padding: 0 16px 20px;
+  border-bottom: 1px solid var(--bg-surface);
+  margin-bottom: 12px;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nav-link {
+  display: block;
+  padding: 10px 16px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-link:hover {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+.nav-link.active {
+  background: var(--bg-surface);
+  color: var(--accent);
+  border-left: 3px solid var(--accent);
+  padding-left: 13px;
+}
+
+/* Main content */
+.app-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--bg-surface);
+  background: var(--bg-secondary);
+}
+
+.app-header h1 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.page-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Status badge */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-connected .status-dot {
+  background: var(--success);
+  box-shadow: 0 0 6px var(--success);
+}
+
+.status-connected {
+  color: var(--success);
+  background: rgba(74, 222, 128, 0.1);
+}
+
+.status-disconnected .status-dot {
+  background: var(--text-muted);
+}
+
+.status-disconnected {
+  color: var(--text-muted);
+  background: rgba(96, 96, 112, 0.1);
+}
+
+.status-connecting .status-dot {
+  background: var(--warning);
+  animation: pulse 1s infinite;
+}
+
+.status-connecting {
+  color: var(--warning);
+  background: rgba(251, 191, 36, 0.1);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* Macropad grid */
+.macropad-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.macropad-row {
+  display: flex;
+  gap: 6px;
+}
+
+.macropad-cell {
+  width: 80px;
+  height: 64px;
+}
+
+.macropad-cell.empty {
+  visibility: hidden;
+}
+
+/* Key cells (shared between key tester and layer viewer) */
+.key-cell {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  padding: 4px;
+  word-break: break-word;
+  transition: background 0.1s, border-color 0.1s, box-shadow 0.1s;
+  border: 2px solid var(--key-border);
+  background: var(--key-idle);
+  color: var(--text-primary);
+  cursor: default;
+  user-select: none;
+}
+
+.key-cell.pressed {
+  background: var(--key-pressed);
+  border-color: var(--key-pressed);
+  color: var(--bg-primary);
+  box-shadow: 0 0 12px rgba(74, 222, 128, 0.4);
+}
+
+.key-cell.layer-view {
+  font-size: 11px;
+  background: var(--bg-surface);
+  border-color: var(--key-border);
+}
+
+/* Layer selector */
+.layer-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.layer-tab {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--key-border);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.layer-tab:hover {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+.layer-tab.active {
+  background: var(--accent);
+  color: var(--bg-primary);
+  border-color: var(--accent);
+}
+
+/* Pot monitor */
+.pot-monitor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.pot-gauge {
+  width: 300px;
+}
+
+.pot-gauge-bar {
+  width: 100%;
+  height: 24px;
+  background: var(--bg-surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--key-border);
+}
+
+.pot-gauge-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--key-pressed));
+  border-radius: var(--radius);
+  transition: width 0.05s;
+}
+
+.pot-value {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.pot-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Connect button */
+.connect-btn {
+  padding: 6px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.connect-btn:hover {
+  background: rgba(76, 201, 240, 0.1);
+}
+
+.connect-btn.connected {
+  border-color: var(--text-muted);
+  color: var(--text-muted);
+}
+
+/* Test Mode Toggle */
+.test-mode-toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: var(--bg-surface);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.test-mode-toggle:hover {
+  background: var(--key-border);
+}
+
+.test-mode-toggle.active {
+  background: var(--accent);
+}
+
+.test-mode-toggle.active:hover {
+  background: var(--accent-hover);
+}
+
+.test-mode-toggle-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+
+.test-mode-toggle.active .test-mode-toggle-slider {
+  transform: translateX(20px);
+}

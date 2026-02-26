@@ -1,0 +1,46 @@
+# Build outputs
+*.uf2
+*.hex
+*.bin
+*.elf
+*.map
+*.lst
+*.o
+build/
+.build/
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+
+# Temp files
+*.tmp
+*.bak
+*.log
+
+# Sandbox (may contain external repos)
+sandbox/
+
+# SDKs (external repos - clone separately, see sdks/README.md)
+sdks/*
+!sdks/README.md
+
+# CAD temp files
+*.bak
+*-cache.lib
+*-backups/
+*.kicad_prl
+fp-info-cache

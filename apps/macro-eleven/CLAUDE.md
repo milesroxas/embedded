@@ -1,0 +1,109 @@
+# Macro Eleven Companion App
+
+Desktop companion app for the Macro Eleven macropad. Configures layer mappings and tests inputs (key presses + potentiometer) via Raw HID.
+
+## Tech Stack
+
+- **Frontend:** React 19 + TypeScript + Vite
+- **Backend:** Tauri v2 (Rust)
+- **HID:** `hidapi` crate, QMK Raw HID (32-byte reports, usage page `0xFF60`)
+- **Routing:** react-router-dom
+
+## Architecture & Standards
+
+### Feature-Sliced Design (FSD)
+
+All frontend code follows FSD. Layers have strict import rules — each layer can only import from layers below it:
+
+```
+src/
+├── app/          # App shell, providers, global styles. Imports from all layers.
+├── pages/        # Route-level components. Thin wrappers around features.
+├── features/     # Self-contained business logic + UI (key-tester, layer-viewer, pot-monitor).
+├── entities/     # Domain types and constants. No UI, no side effects.
+└── shared/       # Reusable UI components (ui/) and utilities (lib/). No business logic.
+```
+
+**Import direction:** `app → pages → features → entities → shared`. Never import upward.
+
+### Domain-Driven Design
+
+Entities model the hardware domain:
+- `device.ts` — connection status, device info
+- `layer.ts` — layer data, key assignments (maps to QMK keymap layers)
+- `key.ts` — matrix positions, key/pot events, physical layout constants
+
+The physical layout is defined once in `key.ts` (`MATRIX_LAYOUT`) and shared via `MacropadGrid`.
+
+### Principles
+
+- **DRY** — Physical layout defined once (`MATRIX_LAYOUT`), rendered via `MacropadGrid`. Keycode-to-label mapping centralized in `keycode-labels.ts`.
+- **Full type safety** — All Tauri commands have typed wrappers in `shared/lib/tauri.ts`. Rust structs derive `Serialize`. No `any` types.
+- **Separation of concerns** — Hooks handle subscriptions (`useKeyEvents`, `usePotValue`, `useLayerData`), components handle rendering.
+- **Minimal dependencies** — No state management library. React context + hooks suffice for device state.
+
+## Rust Backend Structure
+
+```
+src-tauri/src/
+├── lib.rs              # Tauri setup, command registration, HidConnection state
+├── main.rs             # Desktop entry point
+├── commands/
+│   ├── device.rs       # detect_device_cmd, connect_device, disconnect_device
+│   └── layers.rs       # get_layer_data (parses keymap.c, default path hardcoded)
+├── hid/
+│   ├── connection.rs   # HidConnection: background polling thread at ~60Hz, auto-reconnect
+│   └── protocol.rs     # 32-byte message format, build_state_request / parse_state_response
+└── keymap/
+    └── parser.rs       # Regex-based keymap.c parser, extracts LAYOUT() blocks + layer names
+```
+
+## Raw HID Protocol
+
+Request/response, 32 bytes each:
+- **Request:** `[0x01, 0, 0, ...]` — poll state
+- **Response:** `[0x01, key_lo, key_hi, pot_lo, pot_hi, layer, ...]`
+  - Bytes 1-2: 11-bit key bitmask (bit per matrix position)
+  - Bytes 3-4: potentiometer ADC (uint16 LE, 0-1023)
+  - Byte 5: active layer number
+
+Tauri events emitted: `macro11:key-event`, `macro11:pot-value`, `macro11:device-status`.
+
+## Hardware Reference
+
+- **MCU:** RP2040
+- **USB:** VID `0x4653`, PID `0x0002`
+- **Matrix:** 3 rows x 4 cols, COL2ROW. 11 keys (position [0,3] is empty).
+- **Pot:** ADC on `GP26`, 10-bit (0-1023)
+- **Layers:** 11 layers (0 = App Selection, 1-10 = app-specific shortcuts)
+
+### Key Files (QMK firmware)
+
+- `keyboards/handwired/macro_eleven/keymaps/apps/keymap.c` — layer definitions + `raw_hid_receive()`
+- `keyboards/handwired/macro_eleven/keyboard.json` — USB IDs, matrix pins, layout
+- `keyboards/handwired/macro_eleven/rules.mk` — `RAW_ENABLE = yes`
+- `keyboards/handwired/macro_eleven/config.h` — `POT_PIN GP26`
+
+## Commands
+
+```bash
+npm run tauri dev     # Launch app in dev mode (frontend HMR + Rust rebuild)
+npm run build         # Build frontend only
+npx tsc --noEmit      # TypeScript typecheck
+cd src-tauri && cargo build   # Rust build only
+cd src-tauri && cargo test    # Run Rust tests (keymap parser)
+```
+
+## UI Design
+
+- **Dark theme:** `#1a1a2e` background, `#4cc9f0` accent, `#4ade80` pressed key color
+- **Window:** 800x600, sidebar nav + content area
+- **Grid:** `MacropadGrid` renders 3-4-4 layout matching physical macropad (empty cell at [0,3])
+- CSS custom properties defined in `app/App.css` — use `var(--*)` tokens, not raw colors
+
+## Adding Features
+
+- New pages: create in `pages/`, add route in `app/App.tsx`, add nav item in `shared/ui/NavBar.tsx`
+- New Tauri commands: add to `commands/*.rs`, register in `lib.rs`, add typed wrapper in `shared/lib/tauri.ts`
+- New keycodes: add to `shared/lib/keycode-labels.ts`
+- New HID message types: extend `hid/protocol.rs` and update firmware `raw_hid_receive()`
