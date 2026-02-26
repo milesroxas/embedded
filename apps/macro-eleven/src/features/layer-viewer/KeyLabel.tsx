@@ -1,3 +1,4 @@
+import { cn } from "../../shared/lib/utils";
 import { keycodeToLabel } from "../../shared/lib/keycode-labels";
 
 interface KeyLabelProps {
@@ -8,8 +9,14 @@ export function KeyLabel({ keycode }: KeyLabelProps) {
   const label = keycodeToLabel(keycode);
 
   return (
-    <div className="key-cell layer-view" title={keycode}>
-      {label}
+    <div
+      className={cn(
+        "h-full w-full flex items-center justify-center rounded-md border p-1 text-center text-xs font-medium transition-colors select-none",
+        "bg-background border-input text-foreground shadow-sm hover:bg-accent hover:text-accent-foreground"
+      )}
+      title={keycode}
+    >
+      <span className="line-clamp-2 leading-tight">{label}</span>
     </div>
   );
 }
