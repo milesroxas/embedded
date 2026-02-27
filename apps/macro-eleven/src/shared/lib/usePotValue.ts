@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { PotEvent } from "../../entities/key";
-import { onPotValue } from "../../shared/lib/tauri";
+import { onPotValue } from "./tauri";
 
 export function usePotValue() {
   const [potState, setPotState] = useState<PotEvent>({

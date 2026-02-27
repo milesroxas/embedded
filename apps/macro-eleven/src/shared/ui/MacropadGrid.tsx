@@ -5,9 +5,11 @@ interface MacropadGridProps {
   renderKey: (index: number) => React.ReactNode;
   /** When true, cells fill available space (for overlay). Default: fixed 80×64 px cells. */
   fluid?: boolean;
+  /** Renders content in the physical empty cell at [row 0, col 3] (where the knob sits). */
+  renderEmpty?: () => React.ReactNode;
 }
 
-export function MacropadGrid({ renderKey, fluid }: MacropadGridProps) {
+export function MacropadGrid({ renderKey, fluid, renderEmpty }: MacropadGridProps) {
   return (
     <div className={cn("flex flex-col gap-1.5", fluid && "flex-1 min-h-0 min-w-0")}>
       {MATRIX_LAYOUT.map((row, rowIdx) => (
@@ -17,8 +19,13 @@ export function MacropadGrid({ renderKey, fluid }: MacropadGridProps) {
               return (
                 <div
                   key={colIdx}
-                  className={cn("invisible", fluid ? "flex-1 min-w-0 min-h-0" : "w-20 h-16")}
-                />
+                  className={cn(
+                    fluid ? "flex-1 min-w-0 min-h-0" : "w-20 h-16",
+                    renderEmpty ? "flex items-center justify-center @container-[size]" : "invisible"
+                  )}
+                >
+                  {renderEmpty?.()}
+                </div>
               );
             }
             const index = matrixToIndex(pos.row, pos.col);

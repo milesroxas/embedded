@@ -1,5 +1,5 @@
 import { PotGauge } from "./PotGauge";
-import { usePotValue } from "./usePotValue";
+import { usePotValue } from "../../shared/lib/usePotValue";
 
 const LAYER_POT_FUNCTIONS: Record<number, string> = {
   0: "Volume Control",

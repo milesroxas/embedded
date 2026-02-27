@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { MacropadGrid } from "../../shared/ui/MacropadGrid";
+import { KnobDial } from "../../shared/ui/KnobDial";
 import { Badge } from "../../shared/ui/badge";
 import { Separator } from "../../shared/ui/separator";
 import { keycodeToLabel } from "../../shared/lib/keycode-labels";
 import { useKeyEvents } from "../../shared/lib/useKeyEvents";
 import { useLayerData } from "../../shared/lib/useLayerData";
+import { usePotValue } from "../../shared/lib/usePotValue";
 import { onDeviceStatus } from "../../shared/lib/tauri";
 import { cn } from "../../shared/lib/utils";
 
@@ -58,6 +60,7 @@ function OverlayShell({
 export function OverlayView() {
   const { keys, layer } = useKeyEvents();
   const { layers, loading, error } = useLayerData();
+  const { value: potValue } = usePotValue();
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
@@ -133,6 +136,14 @@ export function OverlayView() {
               <OverlayKeyCell
                 keycode={currentLayer.keys[index] ?? "KC_NO"}
                 pressed={keys[index] ?? false}
+              />
+            )}
+            renderEmpty={() => (
+              <KnobDial
+                value={potValue / 1023}
+                ticks={31}
+                label="Potentiometer"
+                fluid
               />
             )}
           />
